@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{% if post %}Редактировать пост{% else %}Новый пост{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">{% if post %}Редактировать пост{% else %}Новый пост{% endif %}</h2>
+        <form method="POST" action="{% if post %}{{ url_for('edit_post', post_id=post.id) }}{% else %}{{ url_for('create_post') }}{% endif %}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Заголовок</label>
+                <input type="text" class="form-control" id="title" name="title" 
+                       value="{% if post %}{{ post.title }}{% endif %}" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Содержание</label>
+                <textarea class="form-control" id="content" name="content" rows="10" required>{% if post %}{{ post.content }}{% endif %}</textarea>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="is_private" name="is_private" 
+                       {% if post and post.is_private %}checked{% endif %}>
+                <label class="form-check-label" for="is_private">Приватный пост (виден только авторизованным пользователям)</label>
+            </div>
+            <button type="submit" class="btn btn-primary">{% if post %}Обновить{% else %}Создать{% endif %}</button>
+            <a href="{% if post %}{{ url_for('show_post', post_id=post.id) }}{% else %}{{ url_for('index') }}{% endif %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
