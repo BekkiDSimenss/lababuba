@@ -1,1 +1,7 @@
-
+blog.db
+.db
+instance/
+uploads/
+.json
+.env
+settings.py
